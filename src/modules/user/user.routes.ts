@@ -9,22 +9,10 @@ const router = express.Router();
 
 router.post("/", userControllers.createUser)
 
-router.get("/", async(req: Request, res:Response)=>{
-    try {
-        const result=await pool.query(`SELECT * FROM users`);
-        res.status(200).json({
-            success:true,
-            message:"Users retrieved successfully",
-            data:result.rows
-        })
-        
-    } catch (error:any) {
-        res.status(500).json({
-            success:false,
-            message:error.message,
-            details:error
-        })
-    }
-})
+router.get("/", userControllers.getUser)
+
+router.get("/:id",userControllers.getSingleUser)
+router.put("/:id", userControllers.updateUser)
+router.delete("/:id",userControllers.deleteUser)
 
 export const userRoutes = router;
